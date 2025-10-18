@@ -34,19 +34,17 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Nombre</th>
-                            <th>Cedula</th>
+                            <th>Usuario</th>
                             <th>Email</th>
-                            <th>Género</th>
-                            <th>Provincia</th>
-                            <th>Dirección</th>
-                            <th>Acciones</th>
+                            <th>Rol</th>
+                            <th>Estado</th>
                         </tr>
                     </thead>
                     <tbody>
                         <!-- Aquí se agregan los usuarios dinámicamente -->
 
-                        <tr>
-                            <td>Danilo</td>
+                        <!--<tr>
+                            <td>Danilo Chinchilla</td>
                             <td>7-0206-0059</td>
                             <td>test@example.com</td>
                             <td>Masculino</td>
@@ -57,7 +55,7 @@
                                 <a href="#" class="btn btn-danger btn-sm"
                                     onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
                             </td>
-                        </tr>
+                        </tr> -->
                     </tbody>
                 </table>
             </main>
@@ -82,8 +80,8 @@
                                 required>
                         </div>
                         <div class="mb-3">
-                            <label for="identificacion" class="form-label">Cedula:</label>
-                            <input type="text" class="form-control" id="identificacion" name="identificacion"
+                            <label for="usuario" class="form-label">Usuario:</label>
+                            <input type="text" class="form-control" id="usuario" name="usuario"
                                 placeholder="X-XXXX-XXXX" required>
                         </div>
                         <div class="mb-3">
@@ -92,41 +90,35 @@
                                 placeholder="usuario@dominio.com" required>
                         </div>
                         <div class="mb3">
-                            <label class="form-label d-block">Género:</label>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="genero" id="femenino"
-                                    value="femenino">
-                                <label class="form-check-label" for="femenino">Femenino</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="genero" id="masculino"
-                                    value="masculino">
-                                <label class="form-check-label" for="masculino">Masculino</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="genero" id="otro" value="otro">
-                                <label class="form-check-label" for="otro">Otro</label>
-                            </div>
+                            <label for="password" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="password" name="password"
+                                required>
                         </div>
-                        <div class="mb-3 mt-3">
-                            <label class="form-label">Dirección:</label>
-                            <div class="mb-3">
-                                <label for="provincia" class="form-label">Provincia:</label>
-                                <select class="form-select" id="provincia">
-                                    <option selected>Seleccione una Provincia</option>
-                                    <option>San José</option>
-                                    <option>Alajuela</option>
-                                    <option>Cartago</option>
-                                    <option>Heredia</option>
-                                    <option>Guanacaste</option>
-                                    <option>Puntarenas</option>
-                                    <option>Limón</option>
+                        <div class="mb3">
+                            <label for="confirm" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="confirm" name="confirm"
+                                required>
+                        </div>
+                        <div class="mb3">
+                            <label for="confirm" class="form-label">Contraseña:</label>
+                            <input type="password" class="form-control" id="confirm" name="confirm"
+                                required>
+                        </div>
+                        <div class="mb-3">
+                                <label for="rol" class="form-label">Provincia:</label>
+                                <select class="form-select" id="rol" name="rol">
+                                    <option selected>Seleccione el rol</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Cliente">Cliente</option>
+                                    <option value="Vendedor">Vendedor</option>
+                        </div>
+                        <div class="mb-3">
+                                <label for="estado" class="form-label">Provincia:</label>
+                                <select class="form-select" id="estado" name="estado">
+                                    <option selected>Seleccione el estado</option>
+                                    <option value="A">Activo</option>
+                                    <option value="I">Inactivo</option>
                                 </select>
-                            </div>
-                            <div class="mb-3">
-                                <label for="direccion" class="form-label">Dirección exacta:</label>
-                                <input type="text" class="form-control" id="direccion" name="direccion" placeholder="400m sur del palo de mango" required>
-                            </div>
                         </div>
                         <button type="submit" class="btn btn-success" id="btnGuardar">Guardar Usuario</button>
                     </form>
