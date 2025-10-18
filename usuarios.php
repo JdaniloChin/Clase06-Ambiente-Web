@@ -1,3 +1,67 @@
+<?php
+   require_once("includes/conexion.php"); 
+
+   //CRUD usuarios
+
+   //READ->Select de todos los usuarios
+
+   $usuarios_data = [];
+   $resultado = $stmt = $mysqli->query("SELECT nombre,usuario,correo,rol,estado FROM usuarios");
+   if($resultado && $resultado->num_rows >0){
+    while($row = $resultado->fetch_assoc()){
+        $usuarios_data[] = $row; 
+    }
+   }
+   $stmt->close();
+
+   if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $name= $_POST['name'];
+        $usuario =  $_POST['usuario'];
+        $email =  $_POST['email'];
+        $pass =  $_POST['password'];
+        $confirm =  $_POST['confirm'];
+        $rol =  $_POST['rol'];
+        $estado =  $_POST['estado'];
+        $mensaje = "";
+        $tipo_mensaje = "";
+
+
+
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $mensaje = "Email invalido";
+            $tipo_mensaje = "danger";
+        }elseif($password !== $confirm){
+            $mensaje = "Contraseñas no coinciden";
+            $tipo_mensaje = "danger";
+        }else {
+            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+
+            //CREATE->INSERT de un usuario
+            $sql = 'INSERT INTO usuarios (nombre, usuario, clave, correo, rol, estado) VALUES (?,?,?,?,?,?)';
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param('ssssss',$name,$usuaio,$pass_hash,$email,$rol,$estado);
+            $stmt->execute();
+
+            if($stmt->sqlstate == '00000'){
+                $mensaje = "Usuario creado correctamente";
+                $tipo_mensaje = "success";
+            }elseif($stmt->sqlstate > 0 ){
+                $mensaje="Advertencia, usuario creado pero dio un mensaje: " . $stmt->sqlstate;
+                $tipo_mensaje = "warning";
+            }else{
+                $mensaje = "Error, el usuario no se pudo crear, código de error: " . $stmt->sqlstate;
+                $tipo_mensaje = "danger";
+            }
+            $stmt->close();
+        }
+        $_SESSION['mensaje'] = $mensaje;
+        $_SESSION['tipo_mensaje'] = $tipo_mensaje;
+        $mysqli->close();
+        header("Location: " .$_SERVER['PHP_SELF']);
+        exit();
+
+   }
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -25,7 +89,18 @@
                 </ul>
             </aside>
             <main class="col-md-9 p-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
+                <?php if(isset($_SESSION['mensaje'])):?>
+                    <div class="alert alert-<?php echo $_SESSION['tipo_mensaje'];?> alert-dismissible fade show" role="alert">
+                        <?php echo htmlspecialchars($_SESSION['mensaje']);?>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <?php
+                        //limpiar variables
+                        unset($_SESSION['mensaje']);
+                        unset($_SESSION['tipo_mensaje']);
+                    endif;
+                 ?>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
                     <h3>Usuarios del sistema</h3>
                     <button class="btn btn-success mb-3" id="btnAgregar" data-bs-toggle="modal"
                         data-bs-target="#modalFormulario">Agregar Usuario</button>
@@ -42,20 +117,20 @@
                     </thead>
                     <tbody>
                         <!-- Aquí se agregan los usuarios dinámicamente -->
-
-                        <!--<tr>
-                            <td>Danilo Chinchilla</td>
-                            <td>7-0206-0059</td>
-                            <td>test@example.com</td>
-                            <td>Masculino</td>
-                            <td>Heredia</td>
-                            <td>100m oeste del chino</td>
+                        <?php foreach ($usuarios_data as $usuario): ?>
+                        <tr>
+                            <td><?= htmlspecialchars($usuario['nombre'])  ?></td>
+                            <td><?= htmlspecialchars($usuario['usuario'])  ?></td>
+                            <td><?= htmlspecialchars($usuario['correo'])  ?></td>
+                            <td><?= htmlspecialchars($usuario['rol'])  ?></td>
+                            <td><?= htmlspecialchars($usuario['correo'])  ?></td>
                             <td>
                                 <a href="#" class="btn btn-warning btn-sm btnEditar">Editar</a>
                                 <a href="#" class="btn btn-danger btn-sm"
                                     onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
                             </td>
-                        </tr> -->
+                        </tr>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </main>
@@ -100,7 +175,7 @@
                                 required>
                         </div>
                         <div class="mb-3">
-                                <label for="rol" class="form-label">Provincia:</label>
+                                <label for="rol" class="form-label">Rol:</label>
                                 <select class="form-select" id="rol" name="rol">
                                     <option selected>Seleccione el rol</option>
                                     <option value="Admin">Admin</option>
@@ -109,7 +184,7 @@
                                 </select>
                         </div>
                         <div class="mb-3">
-                                <label for="estado" class="form-label">Provincia:</label>
+                                <label for="estado" class="form-label">Estado:</label>
                                 <select class="form-select" id="estado" name="estado">
                                     <option selected>Seleccione el estado</option>
                                     <option value="A">Activo</option>
