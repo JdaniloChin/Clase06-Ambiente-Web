@@ -95,12 +95,7 @@
                                 required>
                         </div>
                         <div class="mb3">
-                            <label for="confirm" class="form-label">Contraseña:</label>
-                            <input type="password" class="form-control" id="confirm" name="confirm"
-                                required>
-                        </div>
-                        <div class="mb3">
-                            <label for="confirm" class="form-label">Contraseña:</label>
+                            <label for="confirm" class="form-label">Confirmar Contraseña:</label>
                             <input type="password" class="form-control" id="confirm" name="confirm"
                                 required>
                         </div>
@@ -111,6 +106,7 @@
                                     <option value="Admin">Admin</option>
                                     <option value="Cliente">Cliente</option>
                                     <option value="Vendedor">Vendedor</option>
+                                </select>
                         </div>
                         <div class="mb-3">
                                 <label for="estado" class="form-label">Provincia:</label>
