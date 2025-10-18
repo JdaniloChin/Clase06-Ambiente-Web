@@ -197,7 +197,7 @@
             </div>
         </div>
     </div>
-    <script src="./javascript/usuarios.js"></script>
+    <!-- <script src="./javascript/usuarios.js"></script> -->
 </body>
 
 </html>
