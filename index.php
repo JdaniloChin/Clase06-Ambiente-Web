@@ -1,3 +1,5 @@
+<?php
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -18,7 +20,7 @@
                     <form id="loginform" method="post">
                         <div class="mb-3">
                             <label class="form-label" form="email">Usuario:</label>
-                            <input class="form-control" type="email" id="email" placeholder="usuario@dominio.com" required>
+                            <input class="form-control" type="email" id="email" placeholder="test@example.com" required>
                         </div>
                         <label for="password" class="form-label">Contraseña:</label>
                         <div class="input-group mb-3">
