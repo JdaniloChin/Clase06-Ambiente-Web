@@ -1,4 +1,5 @@
 <?php
+session_start();
    require_once("includes/conexion.php"); 
 
    //CRUD usuarios
@@ -15,7 +16,8 @@
    $stmt->close();
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        $name= $_POST['name'];
+        print("entre"); 
+        $name= $_POST['nombre'];
         $usuario =  $_POST['usuario'];
         $email =  $_POST['email'];
         $pass =  $_POST['password'];
@@ -30,18 +32,17 @@
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
             $mensaje = "Email invalido";
             $tipo_mensaje = "danger";
-        }elseif($password !== $confirm){
-            $mensaje = "Contraseñas no coinciden";
+        }elseif($pass !== $confirm){
+            $mensaje = "Contraseñas no coinciden ";
             $tipo_mensaje = "danger";
         }else {
-            $pass_hash = password_hash($password, PASSWORD_DEFAULT);
+            $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
 
             //CREATE->INSERT de un usuario
             $sql = 'INSERT INTO usuarios (nombre, usuario, clave, correo, rol, estado) VALUES (?,?,?,?,?,?)';
             $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param('ssssss',$name,$usuaio,$pass_hash,$email,$rol,$estado);
+            $stmt->bind_param('ssssss',$name,$usuario,$pass_hash,$email,$rol,$estado);
             $stmt->execute();
-
             if($stmt->sqlstate == '00000'){
                 $mensaje = "Usuario creado correctamente";
                 $tipo_mensaje = "success";
