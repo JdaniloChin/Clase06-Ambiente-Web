@@ -148,7 +148,7 @@
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="formularioUsuarios">
+                    <form id="formularioUsuarios" method="post">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre Completo:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Juan Pérez"
