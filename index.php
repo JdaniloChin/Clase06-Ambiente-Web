@@ -1,4 +1,43 @@
 <?php
+    session_start();
+    require_once("includes/conexion.php"); 
+
+    if($_SERVER['REQUEST_METHOD'] === 'POST'){
+        $email = $_POST['email'];
+        $pass = $_POST['password'];
+        
+        //validar datos
+        if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            $mensaje = "Correo Invalido";
+        }else{
+            //buscar si el correo existe en la base de datos
+            $sql = "SELECT nombre, clave, rol FROM usuarios WHERE correo = ?";
+            $stmt = $mysqli->prepare($sql);
+            $stmt->bind_param("s",$email);
+            $stmt->execute();
+
+            $resultado = $stmt->get_result();
+
+            if($resultado->num_rows === 1){
+                $usuario = $resultado->fetch_assoc();
+
+                if(password_verify($pass, $usuario['clave'])){
+                    $_SESSION['nombre_usuario'] = $usuario['nombre'];
+                    $_SESSION['rol'] = $usuario['rol'];
+                    $_SESSION['correo'] = $email;
+
+                    header("Location: home.php");
+                    exit();
+                }
+
+            }else{
+                $mensaje = "Correo no registrado";
+            }
+            $stmt->close();
+            $mysqli->close();
+        }
+
+    }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -20,7 +59,7 @@
                     <form id="loginform" method="post">
                         <div class="mb-3">
                             <label class="form-label" form="email">Usuario:</label>
-                            <input class="form-control" type="email" id="email" placeholder="test@example.com" required>
+                            <input class="form-control" type="email" id="email" name="email" placeholder="test@example.com" required>
                         </div>
                         <label for="password" class="form-label">Contraseña:</label>
                         <div class="input-group mb-3">
