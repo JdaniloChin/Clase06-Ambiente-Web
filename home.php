@@ -30,8 +30,11 @@ if(!isset($_SESSION['nombre_usuario'])){
             </aside>
             <main class="col-md-9 p-4">
                 <h1 class="text-center">Bienvenido  <?php echo htmlspecialchars($_SESSION['nombre_usuario']);?></h1>
-                <p>El correo con el que se conectó es:<?php echo htmlspecialchars($_SESSION['correo']);?>.<br>
-                Su rol de seguridad es de: <strong><?php echo htmlspecialchars($_SESSION['rol']);?></strong>.</p>
+                <div class="alert alert-info text-center">
+                    <p>El correo con el que se conectó es: <strong><?php echo htmlspecialchars($_SESSION['correo']);?></strong>.<br>
+                    Su rol de seguridad es de: <strong><?php echo htmlspecialchars($_SESSION['rol']);?></strong>.</p>
+                </div>
+                
             </main>
             <footer class="text-center mt-3">
                 &copy; 2025 - Desarrollado por Ambiente Web Cliente Servidor
