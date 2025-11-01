@@ -184,8 +184,8 @@ session_start();
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
-                    <input type="hidden" id="usuario_id" name="usuario_id">
                     <form id="formularioUsuarios" method="post">
+                        <input type="hidden" id="usuario_id" name="usuario_id">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre Completo:</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Juan Pérez"
