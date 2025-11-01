@@ -89,6 +89,18 @@ session_start();
         exit();
 
    }
+
+   if(isset($_GET['eliminar'])){
+    $id = $_GET['eliminar'];
+    $sql= "DELETE FROM usuarios WHERE id_usuario = ?";
+    $stmt = $mysqli->prepare($sql);
+    $stmt->bind_param("i",$id);
+    $stmt->execute();
+    $stmt->close();
+    $mysqli->close();
+    header("Location: " .$_SERVER['PHP_SELF']);
+    exit();
+   }
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -162,7 +174,7 @@ session_start();
                                 data-rol="<?= $usuario['rol']  ?>"
                                 data-estado="<?= $usuario['estado']  ?>"
                                 class="btn btn-warning btn-sm btnEditar">Editar</a>
-                                <a href="#" class="btn btn-danger btn-sm"
+                                <a href="?eliminar=<?= $usuario['id_usuario'] ?>" class="btn btn-danger btn-sm"
                                     onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
                             </td>
                         </tr>
