@@ -8,12 +8,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
     btnsEditar.forEach(btn => {
         btn.addEventListener('click', function (){
-            const id = this.getAttribute(data-id);
-            const nombre = this.getAttribute(data-nombre);
-            const usuario = this.getAttribute(data-usuario);
-            const correo = this.getAttribute(data-correo);
-            const rol = this.getAttribute(data-rol);
-            const estado = this.getAttribute(data-estado);
+            const id = this.getAttribute('data-id');
+            const nombre = this.getAttribute('data-nombre');
+            const usuario = this.getAttribute('data-usuario');
+            const correo = this.getAttribute('data-correo');
+            const rol = this.getAttribute('data-rol');
+            const estado = this.getAttribute('data-estado');
 
             //cambiar titulo del modal
             modalTitle.textContent = 'Editar Usuario';
