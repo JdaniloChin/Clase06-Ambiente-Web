@@ -1,41 +1,44 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const tabla = document.getElementById('tablaUsuarios');
+    const btnsEditar = document.querySelectorAll('.btnEditar');
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modalFormulario'));
+    const modalTitle = document.getElementById('modalFormularioLabel');
     const form = document.getElementById('formularioUsuarios');
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('confirm');
 
-    form.addEventListener('submit', function(e){
-        e.preventDefault();
+    btnsEditar.forEach(btn => {
+        btn.addEventListener('click', function (){
+            const id = this.getAttribute(data-id);
+            const nombre = this.getAttribute(data-nombre);
+            const usuario = this.getAttribute(data-usuario);
+            const correo = this.getAttribute(data-correo);
+            const rol = this.getAttribute(data-rol);
+            const estado = this.getAttribute(data-estado);
 
-        const nombre = document.getElementById('nombre').value;
-        const cedula = document.getElementById('identificacion').value;
-        const email = document.getElementById('email').value;
-        const genero = document.querySelector('input[name="genero"]:checked')?.value || "No especificado";
-        const provincia = document.getElementById('provincia').value;
-        const direccion = document.getElementById('direccion').value;
+            //cambiar titulo del modal
+            modalTitle.textContent = 'Editar Usuario';
 
-        if(!nombre || !email || !cedula || !provincia == "Selecione una provincia" ){
-            alert("Por favor, complete los campos obligatorios");
-            return;
-        }
+            //precargar los datos del usuario en la tabla al formulario
+            document.getElementById('usuario_id').value = id;
+            document.getElementById('nombre').value = nombre;
+            document.getElementById('usuario').value = usuario;
+            document.getElementById('email').value = email;
+            document.getElementById('rol').value = rol;
+            document.getElementById('estado').value = estado;
 
-        const nuevaFila = tabla.insertRow();
-        nuevaFila.innerHTML = `
-        <td>${nombre}</td>
-        <td>${cedula}</td>
-        <td>${email}</td>
-        <td>${genero}</td>
-        <td>${provincia}</td>
-        <td>${direccion}</td>
-        <td>
-            <a href="#" class="btn btn-warning btn-sm btnEditar">Editar</a>
-            <a href="#" class="btn btn-danger btn-sm"
-            onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
-        </td>
-        `;
+            //Contraseña por seguridad se queda en blanco
+            document.getElementById('password').value='';
+            document.getElementById('confirm').value= '';
 
-        form.reset();
+            //Quitar required para edicion
+            passwordInput.removeAttribute('required');
+            confirmInput.removeAttribute('required');
 
-        const modal = bootstrap.Modal.getInstance(document.getElementById('modalFormulario'));
-        modal.hide();
-    })
+            modal.show();
+
+        })
+    });
+
+    
 
 })
