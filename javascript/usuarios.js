@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const passwordInput = document.getElementById('password');
     const confirmInput = document.getElementById('confirm');
 
-    btnsEditar.forEach(btn => {
+    btnEditar.forEach(btn => {
         btn.addEventListener('click', function (){
             const id = this.getAttribute(data-id);
             const nombre = this.getAttribute(data-nombre);
