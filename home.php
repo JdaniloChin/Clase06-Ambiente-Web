@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['nombre_usuario'])){
+    header("Location: index.php");
+    exit();
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,7 +29,9 @@
                 </ul>
             </aside>
             <main class="col-md-9 p-4">
-                <h1 class="text-center">Bienvenido usuario</h1>
+                <h1 class="text-center">Bienvenido  <?php echo htmlspecialchars($_SESSION['nombre_usuario']);?></h1>
+                <p>El correo con el que se conectó es:<?php echo htmlspecialchars($_SESSION['correo']);?>.<br>
+                Su rol de seguridad es de: <strong><?php echo htmlspecialchars($_SESSION['rol']);?></strong>.</p>
             </main>
             <footer class="text-center mt-3">
                 &copy; 2025 - Desarrollado por Ambiente Web Cliente Servidor
