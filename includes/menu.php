@@ -4,9 +4,10 @@
                 <h4 class="mb-4">Menú</h4>
                 <ul class="nav flex-column">
                     <li class="nav-item"><a class="nav-link text-white" href="./home.php">Inicio</a></li>
-                    <? if(isset($_SESSION['rol']) && $_SESSION['rol'] === "Admin"): ?>
-                        <li class="nav-item"><a class="nav-link text-white" href="./usuarios.php">Usuarios</a></li>
-                    <? endif ?>
+                    <? if(isset($_SESSION['rol']) && $_SESSION['rol'] === "Admin"){
+                            echo '<li class="nav-item"><a class="nav-link text-white" href="./usuarios.php">Usuarios</a></li>';
+                        }
+                         ?>
                     <li class="nav-item"><a class="nav-link text-white" href="#">Productos</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="#">Ventas</a></li>
                     <li class="nav-item"><a class="nav-link text-white" href="#">Reportes</a></li>
