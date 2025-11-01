@@ -134,7 +134,7 @@ session_start();
                                 data-correo="<?= $usuario['correo']  ?>"
                                 data-rol="<?= $usuario['rol']  ?>"
                                 data-estado="<?= $usuario['estado']  ?>"
-                                class="btn btn-warning btn-sm btnsEditar">Editar</a>
+                                class="btn btn-warning btn-sm btnEditar">Editar</a>
                                 <a href="#" class="btn btn-danger btn-sm"
                                     onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
                             </td>
