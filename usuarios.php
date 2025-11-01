@@ -7,7 +7,7 @@ session_start();
    //READ->Select de todos los usuarios
 
    $usuarios_data = [];
-   $resultado = $stmt = $mysqli->query("SELECT nombre,usuario,correo,rol,estado FROM usuarios");
+   $resultado = $stmt = $mysqli->query("SELECT id_usuario,nombre,usuario,correo,rol,estado FROM usuarios");
    if($resultado && $resultado->num_rows >0){
     while($row = $resultado->fetch_assoc()){
         $usuarios_data[] = $row; 
@@ -114,6 +114,7 @@ session_start();
                             <th>Email</th>
                             <th>Rol</th>
                             <th>Estado</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -124,9 +125,16 @@ session_start();
                             <td><?= htmlspecialchars($usuario['usuario'])  ?></td>
                             <td><?= htmlspecialchars($usuario['correo'])  ?></td>
                             <td><?= htmlspecialchars($usuario['rol'])  ?></td>
-                            <td><?= htmlspecialchars($usuario['correo'])  ?></td>
+                            <td><?= htmlspecialchars($usuario['estado'])  ?></td>
                             <td>
-                                <a href="#" class="btn btn-warning btn-sm btnEditar">Editar</a>
+                                <a href="#" 
+                                data-id="<?= $usuario['id_usuario']  ?>"
+                                data-nombre="<?= $usuario['nombre']  ?>"
+                                data-usuario="<?= $usuario['usuario']  ?>"
+                                data-correo="<?= $usuario['correo']  ?>"
+                                data-rol="<?= $usuario['rol']  ?>"
+                                data-estado="<?= $usuario['estado']  ?>"
+                                class="btn btn-warning btn-sm btnsEditar">Editar</a>
                                 <a href="#" class="btn btn-danger btn-sm"
                                     onclick="return confirm('¿Está seguro de eliminar este usuario?')">Eliminar</a>
                             </td>
@@ -149,6 +157,7 @@ session_start();
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
+                    <input type="hidden" id="usuario_id" name="usuario_id">
                     <form id="formularioUsuarios" method="post">
                         <div class="mb-3">
                             <label for="nombre" class="form-label">Nombre Completo:</label>
@@ -158,7 +167,7 @@ session_start();
                         <div class="mb-3">
                             <label for="usuario" class="form-label">Usuario:</label>
                             <input type="text" class="form-control" id="usuario" name="usuario"
-                                placeholder="X-XXXX-XXXX" required>
+                                placeholder="usr123" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Correo electrónico:</label>
@@ -198,7 +207,7 @@ session_start();
             </div>
         </div>
     </div>
-    <!-- <script src="./javascript/usuarios.js"></script> -->
+    <script src="./javascript/usuarios.js"></script> 
 </body>
 
 </html>
