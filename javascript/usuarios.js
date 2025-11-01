@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('usuario_id').value = id;
             document.getElementById('nombre').value = nombre;
             document.getElementById('usuario').value = usuario;
-            document.getElementById('email').value = email;
+            document.getElementById('email').value = correo;
             document.getElementById('rol').value = rol;
             document.getElementById('estado').value = estado;
 
