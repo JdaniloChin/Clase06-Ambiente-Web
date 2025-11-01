@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const btnsEditar = document.querySelectorAll('.btnEditar');
-    const modal = new bootstrap.Modal.(document.getElementById('modalFormulario'));
+    const modalElement = document.getElementById('modalFormulario');
+    const modal = new bootstrap.Modal(modalElement);
     const modalTitle = document.getElementById('modalFormularioLabel');
     const form = document.getElementById('formularioUsuarios');
     const passwordInput = document.getElementById('password');
