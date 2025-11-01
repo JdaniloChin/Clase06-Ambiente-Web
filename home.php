@@ -17,17 +17,7 @@ if(!isset($_SESSION['nombre_usuario'])){
 <body>
     <div class="container-fluid">
         <div class="row min-vh-100">
-            <aside class="col-md-3 bg-dark text-white p-4">
-                <h4 class="mb-4">Menú</h4>
-                <ul class="nav flex-column">
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="./usuarios.html">Usuarios</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Productos</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Ventas</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Reportes</a></li>
-                    <li class="nav-item"><a class="nav-link text-white" href="#">Configuración</a></li>
-                </ul>
-            </aside>
+            <?php include 'includes/menu.php'; ?>
             <main class="col-md-9 p-4">
                 <h1 class="text-center">Bienvenido  <?php echo htmlspecialchars($_SESSION['nombre_usuario']);?></h1>
                 <div class="alert alert-info text-center">
