@@ -16,7 +16,7 @@ session_start();
    $stmt->close();
 
    if($_SERVER['REQUEST_METHOD'] === 'POST'){
-        print("entre"); 
+        $id = $_POST['usuario_id'];
         $name= $_POST['nombre'];
         $usuario =  $_POST['usuario'];
         $email =  $_POST['email'];
@@ -38,22 +38,49 @@ session_start();
         }else {
             $pass_hash = password_hash($pass, PASSWORD_DEFAULT);
 
-            //CREATE->INSERT de un usuario
-            $sql = 'INSERT INTO usuarios (nombre, usuario, clave, correo, rol, estado) VALUES (?,?,?,?,?,?)';
-            $stmt = $mysqli->prepare($sql);
-            $stmt->bind_param('ssssss',$name,$usuario,$pass_hash,$email,$rol,$estado);
-            $stmt->execute();
-            if($stmt->sqlstate == '00000'){
-                $mensaje = "Usuario creado correctamente";
-                $tipo_mensaje = "success";
-            }elseif($stmt->sqlstate > 0 ){
-                $mensaje="Advertencia, usuario creado pero dio un mensaje: " . $stmt->sqlstate;
-                $tipo_mensaje = "warning";
+            if(!empty($id)){
+                //update
+                $sql = "UPDATE usuarios
+                SET nombre = ?, usuario = ?, correo =?, rol=?, estado=?" .
+                (!empty($pass) ? ", clave = ?" : "" ) . "
+                WHERE id_usuario = ?";
+                $stmt = $mysqli->prepare($sql);
+                if(!empty($pass)){
+                    $stmt->bind_param('ssssssi', $name,$email,$rol,$estado,$pass_hash,$id);
+                }else{
+                   $stmt->bind_param('sssssi', $name,$email,$rol,$estado,$id); 
+                }
+                 $stmt->execute();
+                 if($stmt->sqlstate == '00000'){
+                    $mensaje = "Usuario actualizado correctamente";
+                    $tipo_mensaje = "success";
+                 }elseif($stmt->sqlstate > 0){
+                    $mensaje = "Advertencia, usuario actualizado con el código de advertencia: " . $stmt->sqlstate;
+                    $tipo_mensaje = "warning";
+                 }else{
+                    $mensaje = "Error, usuario no actualizado, código de error: " . $stmt->sqlstate;
+                    $tipo_mensaje = "danger";
+
+                 }
+                 $stmt->close();
             }else{
-                $mensaje = "Error, el usuario no se pudo crear, código de error: " . $stmt->sqlstate;
-                $tipo_mensaje = "danger";
-            }
-            $stmt->close();
+                //CREATE->INSERT de un usuario
+                $sql = 'INSERT INTO usuarios (nombre, usuario, clave, correo, rol, estado) VALUES (?,?,?,?,?,?)';
+                $stmt = $mysqli->prepare($sql);
+                $stmt->bind_param('ssssss',$name,$usuario,$pass_hash,$email,$rol,$estado);
+                $stmt->execute();
+                if($stmt->sqlstate == '00000'){
+                    $mensaje = "Usuario creado correctamente";
+                    $tipo_mensaje = "success";
+                }elseif($stmt->sqlstate > 0 ){
+                    $mensaje="Advertencia, usuario creado pero dio un mensaje: " . $stmt->sqlstate;
+                    $tipo_mensaje = "warning";
+                }else{
+                    $mensaje = "Error, el usuario no se pudo crear, código de error: " . $stmt->sqlstate;
+                    $tipo_mensaje = "danger";
+                }
+                $stmt->close();
+            }    
         }
         $_SESSION['mensaje'] = $mensaje;
         $_SESSION['tipo_mensaje'] = $tipo_mensaje;
